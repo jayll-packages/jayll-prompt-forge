@@ -217,7 +217,17 @@ export default function PromptForgeClient() {
             <h1 className="text-4xl font-headline text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary))' }}>
               Prompt<span className="text-accent" style={{ textShadow: '0 0 8px hsl(var(--accent))' }}>Forge</span>
             </h1>
-            <p className="font-code text-sm text-primary/80 mt-1">made by JayLL</p>
+            <p className="font-code text-sm text-primary/80 mt-1">
+              made by{" "}
+              <a
+                href="https://www.linkedin.com/in/jayll13"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline"
+              >
+                JayLL
+              </a>
+            </p>
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -345,6 +355,15 @@ export default function PromptForgeClient() {
       </main>
       <footer className="w-full mt-12 text-center text-muted-foreground font-code text-xs">
           <p>&copy; {new Date().getFullYear()} PromptForge. All rights reserved.</p>
+          <div className="mt-2 flex justify-center gap-4">
+            <span>Contact me:</span>
+            <a href="https://www.linkedin.com/in/jayll13" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-accent hover:underline">
+              LinkedIn
+            </a>
+            <a href="http://fb.com/jayllFA" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-accent hover:underline">
+              Facebook
+            </a>
+          </div>
       </footer>
     </div>
   );
