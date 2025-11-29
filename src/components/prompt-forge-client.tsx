@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, type ChangeEvent, type DragEvent } from "react";
+import Image from "next/image";
 import {
   Copy,
   Plus,
@@ -202,11 +203,23 @@ export default function PromptForgeClient() {
 
 
   return (
-    <div className="container mx-auto p-4 sm:p-8">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-12 text-center">
-        <h1 className="text-5xl font-headline text-primary mb-4 sm:mb-0" style={{ textShadow: '0 0 10px hsl(var(--primary)), 0 0 20px hsl(var(--primary))' }}>
-          Prompt<span className="text-accent" style={{ textShadow: '0 0 10px hsl(var(--accent)), 0 0 20px hsl(var(--accent))' }}>Forge</span>
-        </h1>
+    <div className="container mx-auto p-4 sm:p-8 flex flex-col min-h-screen">
+       <header className="flex flex-col sm:flex-row justify-between items-center mb-8 text-center">
+        <div className="flex items-center gap-4 mb-4 sm:mb-0">
+          <Image
+            src="https://objectstorageapi.ap-southeast-1.clawcloudrun.com/gmwlrt8t-data/keyboard_logo.png"
+            width={80}
+            height={80}
+            alt="PromptForge Logo"
+            className="filter invert"
+          />
+          <div>
+            <h1 className="text-4xl font-headline text-primary" style={{ textShadow: '0 0 8px hsl(var(--primary))' }}>
+              Prompt<span className="text-accent" style={{ textShadow: '0 0 8px hsl(var(--accent))' }}>Forge</span>
+            </h1>
+            <p className="font-code text-sm text-primary/80 mt-1">made by JayLL</p>
+          </div>
+        </div>
         <div className="flex items-center gap-4">
           <input
             type="file"
@@ -224,7 +237,7 @@ export default function PromptForgeClient() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-12">
+      <main className="flex-grow grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-12">
         <Tabs defaultValue="template" className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-transparent mb-4 p-0 gap-4">
             <TabsTrigger value="template" className="bg-card border-2 border-primary/50 rounded-none text-primary data-[state=active]:bg-primary data-[state=active]:text-background data-[state=active]:shadow-[0_0_15px] data-[state=active]:shadow-primary font-headline uppercase">Prompt Template</TabsTrigger>
@@ -237,7 +250,7 @@ export default function PromptForgeClient() {
                   value={template}
                   onChange={(e) => setTemplate(e.target.value)}
                   placeholder="your task is {{task}}..."
-                  className={cn(retroInput, "min-h-[300px] lg:min-h-[calc(100vh-350px)] text-lg")}
+                  className={cn(retroInput, "min-h-[300px] lg:min-h-[calc(100vh-420px)] text-lg")}
                 />
               </CardContent>
             </Card>
@@ -252,7 +265,7 @@ export default function PromptForgeClient() {
                   <Plus className="mr-2 h-4 w-4" /> Add
                 </RetroButton>
               </CardHeader>
-              <CardContent className="p-4 pt-0 space-y-2 max-h-[calc(100vh-420px)] overflow-y-auto pr-4">
+              <CardContent className="p-4 pt-0 space-y-2 max-h-[calc(100vh-490px)] overflow-y-auto pr-4">
                 {variables.map((variable, index) => (
                   <div
                     key={variable.id}
@@ -321,7 +334,7 @@ export default function PromptForgeClient() {
               <div
                 className={cn(
                   retroInput,
-                  "min-h-[300px] lg:min-h-[calc(100vh-220px)] w-full whitespace-pre-wrap rounded-none p-4 text-lg"
+                  "min-h-[300px] lg:min-h-[calc(100vh-290px)] w-full whitespace-pre-wrap rounded-none p-4 text-lg"
                 )}
               >
                 {renderedPrompt}
@@ -329,7 +342,10 @@ export default function PromptForgeClient() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
+      <footer className="w-full mt-12 text-center text-muted-foreground font-code text-xs">
+          <p>&copy; {new Date().getFullYear()} PromptForge. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

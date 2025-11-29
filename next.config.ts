@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'objectstorageapi.ap-southeast-1.clawcloudrun.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
