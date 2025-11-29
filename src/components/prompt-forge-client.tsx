@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -198,24 +199,24 @@ export default function PromptForgeClient() {
       </header>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-12">
-        <div className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <Tabs defaultValue="template" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 bg-transparent mb-4">
+            <TabsTrigger value="template" className={cn(neumorphicCard, "border-none data-[state=active]:shadow-[inset_5px_5px_10px_#e2e7eb,inset_-5px_-5px_10px_#ffffff]")}>Prompt Template</TabsTrigger>
+            <TabsTrigger value="variables" className={cn(neumorphicCard, "border-none data-[state=active]:shadow-[inset_5px_5px_10px_#e2e7eb,inset_-5px_-5px_10px_#ffffff]")}>Variables</TabsTrigger>
+          </TabsList>
+          <TabsContent value="template">
             <Card className={cn(neumorphicCard, "border-none")}>
-              <CardHeader>
-                <CardTitle className="text-2xl font-semibold text-foreground/80">
-                  Prompt Template
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
                 <Textarea
                   value={template}
                   onChange={(e) => setTemplate(e.target.value)}
                   placeholder="your task is {{task}}..."
-                  className={cn(neumorphicInput, "min-h-[150px] text-base")}
+                  className={cn(neumorphicInput, "min-h-[300px] lg:min-h-[calc(100vh-350px)] text-base")}
                 />
               </CardContent>
             </Card>
-
+          </TabsContent>
+          <TabsContent value="variables">
             <Card className={cn(neumorphicCard, "border-none")}>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-2xl font-semibold text-foreground/80">
@@ -225,7 +226,7 @@ export default function PromptForgeClient() {
                   <Plus className="mr-2 h-4 w-4" /> Add
                 </NeumorphicButton>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 max-h-[calc(100vh-420px)] overflow-y-auto">
                 {variables.map((variable, index) => (
                   <div key={variable.id} className="flex items-center gap-2">
                     <Input
@@ -264,8 +265,8 @@ export default function PromptForgeClient() {
                 )}
               </CardContent>
             </Card>
-          </div>
-        </div>
+          </TabsContent>
+        </Tabs>
 
         <div className="lg:sticky top-8 self-start">
           <Card className={cn(neumorphicCard, "border-none")}>
@@ -281,7 +282,7 @@ export default function PromptForgeClient() {
               <div
                 className={cn(
                   neumorphicInput,
-                  "min-h-[300px] w-full whitespace-pre-wrap rounded-lg p-4 text-sm"
+                  "min-h-[300px] lg:min-h-[calc(100vh-220px)] w-full whitespace-pre-wrap rounded-lg p-4 text-sm"
                 )}
               >
                 {renderedPrompt}
