@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, type ChangeEvent } from "react";
+import { useState, useEffect, useRef, type ChangeEvent, type DragEvent } from "react";
 import {
   Copy,
   Plus,
   Trash2,
   Upload,
   Download,
+  GripVertical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,6 +47,9 @@ export default function PromptForgeClient() {
   ]);
   const [renderedPrompt, setRenderedPrompt] = useState("");
   const [isClient, setIsClient] = useState(false);
+  const dragItem = useRef<number | null>(null);
+  const dragOverItem = useRef<number | null>(null);
+
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -78,6 +82,19 @@ export default function PromptForgeClient() {
 
   const deleteVariable = (id: string) => {
     setVariables(variables.filter((v) => v.id !== id));
+  };
+
+  const handleDragSort = () => {
+    if (dragItem.current === null || dragOverItem.current === null) return;
+    
+    const newVariables = [...variables];
+    const draggedItemContent = newVariables.splice(dragItem.current, 1)[0];
+    newVariables.splice(dragOverItem.current, 0, draggedItemContent);
+    
+    dragItem.current = null;
+    dragOverItem.current = null;
+    
+    setVariables(newVariables);
   };
 
   const copyToClipboard = () => {
@@ -228,7 +245,16 @@ export default function PromptForgeClient() {
               </CardHeader>
               <CardContent className="space-y-4 max-h-[calc(100vh-420px)] overflow-y-auto">
                 {variables.map((variable, index) => (
-                  <div key={variable.id} className="flex items-center gap-2">
+                  <div 
+                    key={variable.id}
+                    className="flex items-center gap-2 cursor-grab active:cursor-grabbing"
+                    draggable
+                    onDragStart={() => dragItem.current = index}
+                    onDragEnter={() => dragOverItem.current = index}
+                    onDragEnd={handleDragSort}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
+                     <GripVertical className="h-5 w-5 text-muted-foreground" />
                     <Input
                       placeholder="Key"
                       value={variable.key}
